@@ -7,6 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class Multiplayer implements Runnable {
     //private BlockingQueue<Integer> queue;
+
     DatagramSocket socket;
     DatagramPacket packet;
     String data;

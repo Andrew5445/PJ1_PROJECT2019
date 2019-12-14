@@ -40,8 +40,8 @@ Score score;
 Ball ball;
 Data_to_send object;
 
-    static int dx = 2;
-    static int dy = 2;
+    static int dx = 1;
+    static int dy = 1;
     public GameLayout(Stage stage,boolean Multiplayer_Mode) throws IOException {
         stage.setResizable(false);
         Button button1=new Button("Click to start game");

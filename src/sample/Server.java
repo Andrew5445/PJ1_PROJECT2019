@@ -17,17 +17,20 @@ import java.util.concurrent.Callable;
 import javafx.stage.Stage;
 
 public class Server implements Runnable {
-    ArrayList<String> data_;
+
     String data;
+    String data_1;
+    String data_2;
+    String data_3;
     Scene scene;
     Rectangle rect;
+    String[] data_=new String[3];
     Circle ball;
-   public ArrayList<String> get(){
-       return data_;
-   }
+
     public Server(Scene scene){
        rect=new Rectangle(60,50,5,40);
        ball=new Circle(500,250,10);
+       ball.setFill(Color.WHITE);
        rect.setFill(Color.WHITE);
         this.scene=scene;
         Group root=(Group)this.scene.getRoot();
@@ -54,8 +57,12 @@ public class Server implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+           // data_=data.split("")
             data = new String( receivePacket.getData());
-            //rect.setTranslateY(Double.parseDouble(data));
+            data_=data.split(" ");
+            rect.setTranslateY(Double.parseDouble(data_[0]));
+            ball.setCenterX(Double.parseDouble(data_[1]));
+            ball.setCenterY(Double.parseDouble(data_[2]));
 
              //Thread.sleep(50);
 
