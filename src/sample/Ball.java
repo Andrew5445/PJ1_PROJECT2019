@@ -24,14 +24,14 @@ public class Ball {
     Circle ball;
     Paddle paddle1,paddle2;
     Score score;
-    static int dx = 2;
-    static int dy = 2;
+    static int dx = 1;
+    static int dy = 1;
     public Ball(Scene scene,Paddle paddle1,Paddle paddle2,Score score){
         this.scene=scene;
         this.score=score;
         ball = new Circle(500, 250, 10);
-        ball.setStroke(Color.WHITE);
-        ball.setFill(Color.WHITE);
+        ball.setStroke(Color.INDIANRED);
+        ball.setFill(Color.INDIANRED);
         this.paddle1=paddle1;
         this.paddle2=paddle2;
         Group root = (Group) this.scene.getRoot();
