@@ -62,10 +62,13 @@ Data_to_send object;
         stage.setTitle("Pong");
         stage.show();
         if (Multiplayer_Mode){
-            object=new Data_to_send(paddle1,paddle2,ball,score);
-            Multiplayer multiplayer=new Multiplayer(paddle1,ball);
+
+            Multiplayer multiplayer=new Multiplayer(paddle1,ball,scene2);
             Thread thread=new Thread(multiplayer);
             thread.start();
+            Multiplayer_receive rec=new Multiplayer_receive(scene2,paddle2);
+            Thread t2=new Thread(rec);
+            t2.start();
 
         }
     }
@@ -98,13 +101,13 @@ Data_to_send object;
             paddle1.MoveUp();
             //System.out.println(paddle1.getX());
         }
-        if (isPressed(KeyCode.UP)) {
+       /* if (isPressed(KeyCode.UP)) {
                 paddle2.MoveUp();
         }
         if (isPressed(KeyCode.DOWN)) {
                 paddle2.MoveDown();
 
-        }
+        }*/
 
     }
 

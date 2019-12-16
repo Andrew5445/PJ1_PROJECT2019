@@ -1,8 +1,15 @@
-package game;
+package sample;
 
-import game.objects.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
 import java.io.*;
 import java.net.*;
+import java.util.Date;
+import java.util.concurrent.BlockingQueue;
 
 public class Multiplayer implements Runnable {
     //private BlockingQueue<Integer> queue;
@@ -10,14 +17,15 @@ public class Multiplayer implements Runnable {
     DatagramSocket socket;
     DatagramPacket packet;
     String data;
-    Data_to_send object;
     Paddle paddle1;
     Ball ball;
+    Rectangle rect;
+    Scene scene;
     byte[]data_in_bytes;
-    public Multiplayer(Paddle paddle1,Ball ball) throws IOException {
+    public Multiplayer(Paddle paddle1, Ball ball, Scene scene) throws IOException {
+        this.scene=scene;
         this.paddle1=paddle1;
         this.ball=ball;
-
     }
     public void run () {
         //this.data=this.object.getData_in_string_form();
@@ -51,14 +59,6 @@ public class Multiplayer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            /*DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-            try {
-                clientSocket.receive(receivePacket);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String modifiedSentence = new String(receivePacket.getData());*/
-            //System.out.println("FROM SERVER:" + sentence);
             try {
                Thread.sleep(50);
             } catch (InterruptedException e) {
