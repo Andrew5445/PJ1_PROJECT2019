@@ -51,8 +51,6 @@ public class Ball {
                 new EventHandler<ActionEvent>() {
 
                     public void handle(ActionEvent event) {
-                        centerX = ball.getBoundsInParent().getMaxY() - ball.getBoundsInParent().getMinY();
-                        centerY = ball.getBoundsInParent().getMaxX() - ball.getBoundsInParent().getMinX();
                         if (ball.getBoundsInParent().getMinX() < 0) {
                             score.Add_point_to_player1();
                             ball.setTranslateX(0);
@@ -70,11 +68,23 @@ public class Ball {
 
                         /*Handle ball movement on paddles*/
 
-                        if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY()) || (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY()))) {
+                        if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY()+10))) {
                             dx *= -1;
+                            System.out.println("Paddle minY: "+paddle1.GetMinY());
+                            System.out.println("Paddle maxY: "+paddle1.GetMaxY());
+                            System.out.println("Paddle minX: "+paddle1.GetMinX());
+                            System.out.println("Paddle maxX: "+paddle1.GetMaxX());
+                            System.out.println("Ball center X: " + ball.getBoundsInParent().getMinX() + "Y: " + ball.getBoundsInParent().getMinY());
+                            System.out.println("*************************************************");
                         }
-                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY()) || (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY()))) {
+                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY()+10))) {
                             dx *= -1;
+                            System.out.println("Paddle minY: "+paddle2.GetMinY());
+                            System.out.println("Paddle maxY: "+paddle2.GetMaxY());
+                            System.out.println("Paddle minX: "+paddle2.GetMinX());
+                            System.out.println("Paddle maxX: "+paddle2.GetMaxX());
+                            System.out.println("Ball center X: " + ball.getBoundsInParent().getMaxX() + "Y: " + ball.getBoundsInParent().getMinY());
+                            System.out.println("*************************************************");
                         }
 
                         ball.setTranslateX(ball.getTranslateX() + dx);
