@@ -50,12 +50,12 @@ public class Ball {
 
                     public void handle(ActionEvent event) {
                         if (ball.getBoundsInParent().getMinX() < 0) {
-                            score.Add_point_to_player1();
+                            //score.Add_point_to_player1();
                             ball.setTranslateX(0);
                             ball.setTranslateY(0);
                         }
                         if (ball.getBoundsInParent().getMaxX() > scene.getWidth()) {
-                            score.Add_point_to_player2();
+                            //score.Add_point_to_player2();
                             ball.setTranslateX(0);
                             ball.setTranslateY(0);
                         }
@@ -74,7 +74,7 @@ public class Ball {
                             System.out.println("Ball center X: " + ball.getBoundsInParent().getMinX() + "Y: " + ball.getBoundsInParent().getMinY());
                             System.out.println("*************************************************");
                         }
-                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY()+10))) {
+                        /*if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY()+10))) {
                             dx *= -1;
                             System.out.println("Paddle minY: "+paddle2.GetMinY());
                             System.out.println("Paddle maxY: "+paddle2.GetMaxY());
@@ -82,7 +82,7 @@ public class Ball {
                             System.out.println("Paddle maxX: "+paddle2.GetMaxX());
                             System.out.println("Ball center X: " + ball.getBoundsInParent().getMaxX() + "Y: " + ball.getBoundsInParent().getMinY());
                             System.out.println("*************************************************");
-                        }
+                        }*/
 
                         ball.setTranslateX(ball.getTranslateX() + dx);
                         ball.setTranslateY(ball.getTranslateY() + dy);
@@ -102,11 +102,11 @@ public class Ball {
     }
 
     public double Y(){
-        return ball.getBoundsInParent().getMinY();
+        return ball.getTranslateY();
     }
 
     public double X(){
-        return ball.getBoundsInParent().getMinX();
+        return ball.getTranslateX();
     }
 
 }

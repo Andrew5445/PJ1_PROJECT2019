@@ -33,7 +33,7 @@ public class Server implements Runnable {
     public Server(Scene scene,Paddle paddle){
         this.paddle=paddle;
        rect=new Rectangle(60,50, Constants.paddle_width,Constants.paddle_height);
-       ball=new Circle(1000,0,10);
+       ball=new Circle(500,250,10);
        ball.setFill(Color.WHITE);
        rect.setFill(Color.WHITE);
         this.scene=scene;
