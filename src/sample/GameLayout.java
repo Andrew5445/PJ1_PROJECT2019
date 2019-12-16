@@ -31,7 +31,7 @@ public class GameLayout {
 
 private HashMap<KeyCode, Boolean> keys = new HashMap<>();
 Scene scene2;
-Scene scene;
+static Scene scene;
 HBox start_screen;
 StackPane playground;
 Paddle paddle1;
@@ -40,8 +40,8 @@ Score score;
 Ball ball;
 Data_to_send object;
 
-    static int dx = 1;
-    static int dy = 1;
+    static double dx = Constants.ball_speed;
+    static double dy = Constants.ball_speed;
     public GameLayout(Stage stage,boolean Multiplayer_Mode) throws IOException {
         stage.setResizable(false);
         Button button1=new Button("Click to start game");
@@ -56,9 +56,9 @@ Data_to_send object;
         layout1.getChildren().addAll(button1);
         button1.setPrefWidth(1001);
         button1.setPrefHeight(501);
-        scene=new Scene(layout1,1000,500);
+        scene=new Scene(layout1, Constants.scene_width, Constants.scene_height);
         Group layout2=new Group();
-        scene2=new Scene(layout2,1000,500);
+        scene2=new Scene(layout2, Constants.scene_width, Constants.scene_height);
         scene2.setFill(Color.BLACK);
         paddle1=new Paddle(60,50,scene2);
         paddle2=new Paddle(940,50,scene2);

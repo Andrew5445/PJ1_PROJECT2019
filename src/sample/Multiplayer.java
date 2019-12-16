@@ -59,7 +59,7 @@ public class Multiplayer implements Runnable {
                 e.printStackTrace();
             }
             String modifiedSentence = new String(receivePacket.getData());*/
-            System.out.println("FROM SERVER:" + sentence);
+            //System.out.println("FROM SERVER:" + sentence);
             try {
                Thread.sleep(50);
             } catch (InterruptedException e) {

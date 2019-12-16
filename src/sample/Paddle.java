@@ -23,19 +23,24 @@ Rectangle rect;
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     public Paddle(int x_0,int y_0,Scene scene) {
-        rect=new Rectangle(x_0,y_0,5,40);
+        rect=new Rectangle(x_0,y_0,Constants.paddle_width,Constants.paddle_height);
         rect.setFill(Color.WHITE);
        Group root=(Group)scene.getRoot();
         root.getChildren().add(rect);
     }
     public void MoveDown(){
-      rect.setTranslateY(rect.getTranslateY()+6);
-      y=rect.getBoundsInParent().getMinY();
+        if (rect.getBoundsInParent().getMaxY() < Constants.scene_height ) {
+            rect.setTranslateY(rect.getTranslateY() + Constants.paddle_speed);
+            y = rect.getBoundsInParent().getMinY();
+        }
        //System.out.println(rect.getTranslateY());
     }
     public void MoveUp(){
-        rect.setTranslateY(rect.getTranslateY()-6);
-        y=rect.getBoundsInParent().getMinY();
+        if (rect.getBoundsInParent().getMaxY() > Constants.paddle_height ) {
+            rect.setTranslateY(rect.getTranslateY() - Constants.paddle_speed);
+            y = rect.getBoundsInParent().getMinY();
+            System.out.println(rect.getBoundsInParent().getMaxY());
+        }
     }
 
 public double GetMaxY(){
