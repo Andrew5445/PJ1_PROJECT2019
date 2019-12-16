@@ -33,7 +33,7 @@ Rectangle rect;
         }
     }
 
-public double GetMaxY(){
+    public double GetMaxY(){
         return rect.getBoundsInParent().getMaxY();
 }
     public double GetMinY(){

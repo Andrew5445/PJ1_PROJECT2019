@@ -1,5 +1,6 @@
 package game.servers;
 
+import game.Constants;
 import game.objects.Ball;
 import game.objects.Paddle;
 import game.objects.Score;
@@ -27,8 +28,8 @@ public class GameLayout_server {
     Score score_;
     Ball ball;
 
-    static int dx = 2;
-    static int dy = 2;
+    static double dx = Constants.ball_speed;
+    static double dy = Constants.ball_speed;
     public GameLayout_server(Stage stage,boolean Multiplayer_Mode) throws IOException, ExecutionException, InterruptedException {
         stage.setResizable(false);
         Button button1=new Button("Click to start game");
@@ -43,9 +44,9 @@ public class GameLayout_server {
         layout1.getChildren().addAll(button1);
         button1.setPrefWidth(1001);
         button1.setPrefHeight(501);
-        scene_=new Scene(layout1,1000,500);
+        scene_=new Scene(layout1,Constants.scene_width, Constants.scene_height);
         Group layout2=new Group();
-        scene2_=new Scene(layout2,1000,500);
+        scene2_=new Scene(layout2,Constants.scene_width, Constants.scene_height);
         scene2_.setFill(Color.BLACK);
         //paddle1=new Paddle(60,50,scene2);
         paddle2_=new Paddle(940,50,scene2_);

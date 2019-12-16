@@ -1,5 +1,6 @@
 package game.servers;
 
+import game.Constants;
 import game.GameLayout;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -26,7 +27,7 @@ public class Server implements Runnable {
     Circle ball;
 
     public Server(Scene scene){
-       rect=new Rectangle(60,50,5,40);
+       rect=new Rectangle(60,50, Constants.paddle_width,Constants.paddle_height);
        ball=new Circle(500,250,10);
        ball.setFill(Color.WHITE);
        rect.setFill(Color.WHITE);
