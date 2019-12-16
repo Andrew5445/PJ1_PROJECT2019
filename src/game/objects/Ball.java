@@ -65,7 +65,6 @@ public class Ball {
                         }
 
                         /*Handle ball movement on paddles*/
-
                         if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY()+10))) {
                             dx *= -1;
                             System.out.println("Paddle minY: "+paddle1.GetMinY());
