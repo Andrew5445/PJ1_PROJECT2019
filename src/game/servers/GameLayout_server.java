@@ -50,7 +50,8 @@ public class GameLayout_server {
         scene2_.setFill(Color.BLACK);
         //paddle1=new Paddle(60,50,scene2);
         paddle2_=new Paddle(940,50,scene2_);
-        score_=new Score(scene2_);
+        //score_=new Score(scene2_);
+
         //ball=new Ball(scene2,paddle1,paddle2,score);
        // Ball_Movement();
         Paddle_movement();
@@ -59,15 +60,20 @@ public class GameLayout_server {
 
 
         stage.setScene(scene_);
-        stage.setTitle("Pong");
+        stage.setTitle("Client");
         stage.show();
         if (Multiplayer_Mode){
-            Server server=new Server(scene2_);
+            Server server=new Server(scene2_,paddle2_);
             Thread t=new Thread(server);
+
+            /*Server_send send=new Server_send(paddle2_);
+            Thread sen=new Thread(send);*/
             t.start();
+            //sen.start();
 
 
         }
+
     }
     public void Paddle_movement()
     {
@@ -89,13 +95,13 @@ public class GameLayout_server {
     {
 
 
-        if (isPressed(KeyCode.S)) {
+       /* if (isPressed(KeyCode.S)) {
             paddle1.MoveDown();
         }
         if (isPressed(KeyCode.W)) {
             paddle1.MoveUp();
-            System.out.println(paddle1.getX());
-        }
+            //System.out.println(paddle1.getX());
+        }*/
         if (isPressed(KeyCode.UP)) {
             paddle2_.MoveUp();
         }

@@ -1,6 +1,7 @@
 package game;
 
 import game.objects.*;
+import game.servers.Multiplayer;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -49,8 +50,8 @@ Data_to_send object;
         scene2=new Scene(layout2, Constants.scene_width, Constants.scene_height);
         scene2.setFill(Color.BLACK);
         paddle1=new Paddle(60,50,scene2);
-        paddle2=new Paddle(940,50,scene2);
-        score=new Score(scene2);
+       // paddle2=new Paddle(940,50,scene2);
+      //  score=new Score(scene2);
         ball=new Ball(scene2,paddle1,paddle2,score);
         Ball_Movement();
         Paddle_movement();
@@ -59,16 +60,17 @@ Data_to_send object;
 
 
         stage.setScene(scene);
-        stage.setTitle("Pong");
+        stage.setTitle("Server");
         stage.show();
         if (Multiplayer_Mode){
 
             Multiplayer multiplayer=new Multiplayer(paddle1,ball,scene2);
             Thread thread=new Thread(multiplayer);
+
+           /* Multiplayer_receive rec=new Multiplayer_receive(scene2);
+            Thread t2=new Thread(rec);*/
             thread.start();
-            Multiplayer_receive rec=new Multiplayer_receive(scene2,paddle2);
-            Thread t2=new Thread(rec);
-            t2.start();
+           // t2.start();
 
         }
     }

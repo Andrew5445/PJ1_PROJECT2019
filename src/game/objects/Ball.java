@@ -1,7 +1,6 @@
 package game.objects;
 
 import game.Constants;
-import game.Multiplayer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +16,6 @@ import java.io.IOException;
 
 public class Ball {
     //private final BlockingQueue<Integer> queue;
-    Multiplayer mp;
     double xMin;
     double yMin;
     double xMax;

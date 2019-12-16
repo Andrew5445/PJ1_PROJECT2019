@@ -10,10 +10,9 @@ import javafx.scene.shape.Rectangle;
 import java.util.HashMap;
 
 public class Paddle {
-double y;
+
 Rectangle rect;
 
-    private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     public Paddle(int x_0,int y_0,Scene scene) {
         rect=new Rectangle(x_0,y_0,Constants.paddle_width,Constants.paddle_height);
         rect.setFill(Color.WHITE);
@@ -23,19 +22,18 @@ Rectangle rect;
     public void MoveDown(){
         if (rect.getBoundsInParent().getMaxY() < Constants.scene_height ) {
             rect.setTranslateY(rect.getTranslateY() + Constants.paddle_speed);
-            y = rect.getBoundsInParent().getMinY();
+
         }
     }
     public void MoveUp(){
         if (rect.getBoundsInParent().getMaxY() > Constants.paddle_height ) {
             rect.setTranslateY(rect.getTranslateY() - Constants.paddle_speed);
-            y = rect.getBoundsInParent().getMinY();
+
         }
     }
-
     public double GetMaxY(){
         return rect.getBoundsInParent().getMaxY();
-}
+    }
     public double GetMinY(){
         return rect.getBoundsInParent().getMinY();
     }
@@ -46,13 +44,16 @@ Rectangle rect;
         return rect.getBoundsInParent().getMinX();
     }
 
+
+
     public double getX() {
         return rect.getTranslateX();
     }
 
     public double getY() {
-        return y;
+        return rect.getTranslateY();
     }
+
 
 
 
