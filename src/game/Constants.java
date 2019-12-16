@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 public final class Constants {
     private Constants() {

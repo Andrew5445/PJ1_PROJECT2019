@@ -1,9 +1,8 @@
-package sample;
+package game;
 
+import game.objects.*;
 import java.io.*;
 import java.net.*;
-import java.util.Date;
-import java.util.concurrent.BlockingQueue;
 
 public class Multiplayer implements Runnable {
     //private BlockingQueue<Integer> queue;

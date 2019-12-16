@@ -1,10 +1,5 @@
-package sample;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.concurrent.BlockingQueue;
+package game;
+import game.objects.*;
 
 public class Data_to_send {
     //private final BlockingQueue<Integer> queue;
