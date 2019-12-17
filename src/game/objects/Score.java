@@ -10,6 +10,7 @@ public class Score {
 Integer player1;
 Integer player2;
 Text text;
+
     public Score(Scene scene) {
         Group root=(Group)scene.getRoot();
         player1=0;
@@ -31,5 +32,21 @@ Text text;
       this.text.setFill(Color.WHITE);
         this.text.setText(player1.toString()+" "+":"+" "+player2.toString());
 
+    }
+
+    public double getPlayer1() {
+        return player1;
+    }
+
+    public double getPlayer2() {
+        return player2;
+    }
+    public void setPlayer1(double point){
+       player1=(int)point;
+        Update_score();
+    }
+    public void setPlayer2(double point){
+        player2=(int)point;
+        Update_score();
     }
 }

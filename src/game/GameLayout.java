@@ -2,19 +2,28 @@ package game;
 
 import game.objects.*;
 import game.servers.Multiplayer;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameLayout {
 
@@ -28,7 +37,8 @@ Paddle paddle2;
 Score score;
 Ball ball;
 Data_to_send object;
-
+boolean up=true;
+boolean down=false;
     static double dx = Constants.ball_speed;
     static double dy = Constants.ball_speed;
     public GameLayout(Stage stage,boolean Multiplayer_Mode) throws IOException {
@@ -50,11 +60,61 @@ Data_to_send object;
         scene2=new Scene(layout2, Constants.scene_width, Constants.scene_height);
         scene2.setFill(Color.BLACK);
         paddle1=new Paddle(60,50,scene2);
-       // paddle2=new Paddle(940,50,scene2);
-      //  score=new Score(scene2);
+        paddle2=new Paddle(940,50,scene2);
+        score=new Score(scene2);
         ball=new Ball(scene2,paddle1,paddle2,score);
-        Ball_Movement();
-        Paddle_movement();
+        if (Multiplayer_Mode){
+
+            Multiplayer multiplayer=new Multiplayer(paddle1,ball,scene2,paddle2,score);
+            Thread thread=new Thread(multiplayer);
+
+
+            thread.start();
+
+        }
+
+       /* new Timeline(new KeyFrame(
+                Duration.millis(50),
+                ae -> Paddle_movement()))
+                .play();*/
+
+
+
+        /*Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(.050), e -> {
+                    scene2.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            switch (event.getCode()) {
+                                case W:
+                                    paddle1.MoveUp();
+                                    break;
+                                case S:
+                                    paddle1.MoveDown();
+                                    break;
+                            }
+                        }
+                    });
+                })
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();*/
+
+
+
+
+        /*scene2.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case W:    paddle1.MoveUp(); break;
+                    case S:  paddle1.MoveDown(); break;
+                }
+            }
+        });*/
+       Ball_Movement();
+
+       Paddle_movement();
        //System.out.println(paddle1.getY());
 
 
@@ -62,31 +122,30 @@ Data_to_send object;
         stage.setScene(scene);
         stage.setTitle("Server");
         stage.show();
-        if (Multiplayer_Mode){
 
-            Multiplayer multiplayer=new Multiplayer(paddle1,ball,scene2);
-            Thread thread=new Thread(multiplayer);
-
-           /* Multiplayer_receive rec=new Multiplayer_receive(scene2);
-            Thread t2=new Thread(rec);*/
-            thread.start();
-           // t2.start();
-
-        }
     }
     public void Paddle_movement()
     {
         scene2.setOnKeyPressed(keyEvent -> keys.put(keyEvent.getCode(),true));
         scene2.setOnKeyReleased(keyEvent -> {keys.put(keyEvent.getCode(),false);});
+        Timeline tl = new Timeline();
+        tl.setCycleCount(Animation.INDEFINITE);
+        KeyFrame moveBall = new KeyFrame(Duration.seconds(.050),
+                new EventHandler<ActionEvent>() {
 
 
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                update();
-            }
-        };
-        timer.start();
+
+                    public void handle(ActionEvent event) {
+                        update();
+                    }
+
+                });
+
+        tl.getKeyFrames().add(moveBall);
+        tl.play();
+
+
+
     }
     public boolean isPressed(KeyCode key)
     {

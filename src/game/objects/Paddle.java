@@ -53,36 +53,13 @@ Rectangle rect;
     public double getY() {
         return rect.getTranslateY();
     }
+    public void setY(double pos){
+        rect.setTranslateY(pos);
+    }
+    public void setX(double pos){
+        rect.setTranslateX(pos);
+    }
 
 
 
-
-
-
-
-
-    /*void Move(){
-
-
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.DOWN) {
-
-                                    GraphicsContext gc = canvas.getGraphicsContext2D();
-                                    gc.clearRect(x0, y0, x1, y1);
-                                    y0 += 8;
-                                    y1 += 8;
-                                    gc.setStroke(Color.WHITE);
-                                    gc.strokeLine(x0, y0, x1, y1);
-
-
-
-
-
-                }
-            }
-
-       });
-
-    }*/
 };

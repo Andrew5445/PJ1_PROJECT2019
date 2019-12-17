@@ -3,6 +3,7 @@ package game.servers;
 import game.Constants;
 import game.objects.Ball;
 import game.objects.Paddle;
+import game.objects.Score;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -18,30 +19,25 @@ import java.util.concurrent.BlockingQueue;
 
 public class Multiplayer implements Runnable {
     //private BlockingQueue<Integer> queue;
-
+    Score score;
     DatagramSocket socket;
     DatagramPacket packet;
     String data;
     Paddle paddle1;
+    Paddle paddle2;
     Ball ball;
     Rectangle rect;
     Scene scene;
     double[]da;
     byte[]data_in_bytes;
-    public Multiplayer(Paddle paddle1, Ball ball, Scene scene) throws IOException {
+    public Multiplayer(Paddle paddle1, Ball ball, Scene scene, Paddle paddle2, Score score) throws IOException {
+        this.score=score;
         this.scene=scene;
         this.paddle1=paddle1;
+        this.paddle2=paddle2;
         this.ball=ball;
-        rect=new Rectangle(940,50, Constants.paddle_width,Constants.paddle_height);
-        //this.paddle2=paddle;
-        rect.setFill(Color.WHITE);
-
-
-        Group root=(Group)this.scene.getRoot();
-        root.getChildren().addAll(rect);
     }
     public void run () {
-        //this.data=this.object.getData_in_string_form();
         while (true) {
 
 
@@ -61,10 +57,12 @@ public class Multiplayer implements Runnable {
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
-            da=new double[3];
+            da=new double[5];
             da[0]=paddle1.getY();
             da[1]=ball.X();
             da[2]=ball.Y();
+            da[3]=score.getPlayer1();
+            da[4]=score.getPlayer2();
             ByteBuffer bb = ByteBuffer.allocate(da.length*8);
 
             for(double d : da) {
@@ -93,10 +91,11 @@ public class Multiplayer implements Runnable {
                 e.printStackTrace();
             }
             String received=new String(receivePacket.getData());
-            System.out.print("received"+" "+received);
-            rect.setTranslateY(Double.parseDouble(received));
+            //System.out.print("received"+" "+Double.parseDouble(received));
+            paddle2.setY(Double.parseDouble(received));
+            //rect.setTranslateY(Double.parseDouble(received));
             try {
-               Thread.sleep(50);
+               Thread.sleep(60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
