@@ -72,7 +72,7 @@ public class GameLayout_client {
         });
         Timeline tl = new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
-        KeyFrame moveBall = new KeyFrame(Duration.seconds(.050),
+        KeyFrame moveBall = new KeyFrame(Duration.seconds(.060),
                 new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
                         update();

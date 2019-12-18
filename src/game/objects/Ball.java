@@ -27,8 +27,8 @@ public class Ball {
         this.scene = scene;
         this.score = score;
         ball = new Circle(500, 250, 10);
-        ball.setStroke(Color.INDIANRED);
-        ball.setFill(Color.INDIANRED);
+        ball.setStroke(Color.WHITE);
+        ball.setFill(Color.WHITE);
         this.paddle1 = paddle1;
         this.paddle2 = paddle2;
         Group root = (Group) this.scene.getRoot();
@@ -39,18 +39,18 @@ public class Ball {
     public void Movement() throws IOException {
         Timeline tl = new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
-        KeyFrame moveBall = new KeyFrame(Duration.seconds(.050),
+        KeyFrame moveBall = new KeyFrame(Duration.seconds(.060),
                 new EventHandler<ActionEvent>() {
 
 
                     public void handle(ActionEvent event) {
                         if (ball.getBoundsInParent().getMinX() < 0) {
-                            score.Add_point_to_player1();
+                            score.Add_point_to_player2();
                             ball.setTranslateX(0);
                             ball.setTranslateY(0);
                         }
                         if (ball.getBoundsInParent().getMaxX() > scene.getWidth()) {
-                            score.Add_point_to_player2();
+                            score.Add_point_to_player1();
                             ball.setTranslateX(0);
                             ball.setTranslateY(0);
                         }
@@ -61,26 +61,15 @@ public class Ball {
 
                         /*Handle ball movement on paddles*/
 
-                        if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY() + 10))) {
+                        if ((ball.getBoundsInParent().getMinX()-9 <= paddle1.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY() + 10))) {
                             dx *= -1;
-          /*  System.out.println("Paddle minY: " + paddle1.GetMinY());
-            System.out.println("Paddle maxY: " + paddle1.GetMaxY());
-            System.out.println("Paddle minX: " + paddle1.GetMinX());
-            System.out.println("Paddle maxX: " + paddle1.GetMaxX());
-            System.out.println("Ball center X: " + ball.getBoundsInParent().getMinX() + "Y: " + ball.getBoundsInParent().getMinY());
-            System.out.println("*************************************************");*/
+
                         }
-                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY() + 10))) {
+                        if ((ball.getBoundsInParent().getMaxX()+9 >= paddle2.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY() + 10))) {
                             dx *= -1;
-                           /* System.out.println("Paddle minY: "+paddle2.GetMinY());
-                            System.out.println("Paddle maxY: "+paddle2.GetMaxY());
-                            System.out.println("Paddle minX: "+paddle2.GetMinX());
-                            System.out.println("Paddle maxX: "+paddle2.GetMaxX());
-                            System.out.println("Ball center X: " + ball.getBoundsInParent().getMaxX() + "Y: " + ball.getBoundsInParent().getMinY());
-                            System.out.println("*************************************************");*/
+
                         }
-       /* System.out.print(ball.getTranslateX());
-        System.out.println();*/
+
                         ball.setTranslateX(ball.getTranslateX() - dx);
                         ball.setTranslateY(ball.getTranslateY() + dy);
                     }

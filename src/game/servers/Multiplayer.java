@@ -44,7 +44,7 @@ public class Multiplayer implements Runnable {
             }
             InetAddress IPAddress = null;
             try {
-                IPAddress = InetAddress.getByName("localhost");
+                IPAddress = InetAddress.getByName("25.73.82.87");
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -61,7 +61,7 @@ public class Multiplayer implements Runnable {
             System.out.println();
             sendData = bb.array();
 
-            sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+            sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 80);
             try {
                 clientSocket.send(sendPacket);
             } catch (IOException e) {
