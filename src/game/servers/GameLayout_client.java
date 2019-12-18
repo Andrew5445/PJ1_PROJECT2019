@@ -1,7 +1,9 @@
-package game;
+package game.servers;
 
-import game.objects.*;
-import game.servers.Multiplayer;
+import game.Constants;
+import game.objects.Ball;
+import game.objects.Paddle;
+import game.objects.Score;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -18,24 +20,25 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
-
-public class GameLayout {
+public class GameLayout_client {
     HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    Scene scene2;
-    Scene scene;
+    Scene scene2_;
+    Scene scene_;
+    Paddle paddle1;
+    Paddle paddle2_;
+    Score score_;
+    Ball ball;
     Group layout1;
     Group layout2;
-    Paddle paddle1;
-    Paddle paddle2;
-    Score score;
-    Ball ball;
 
-    public GameLayout(Stage stage, boolean Multiplayer) throws IOException {
-        stage.setResizable(false);
+
+    public GameLayout_client(Stage stage, boolean Multiplayer) throws IOException, ExecutionException, InterruptedException {
         layout1 = new Group();
+        stage.setResizable(false);
         Button button1 = new Button("Click to start game");
-        button1.setOnAction(e -> stage.setScene(scene2));
+        button1.setOnAction(e -> stage.setScene(scene2_));
         button1.setStyle("-fx-border-color: white;" +
                 "-fx-background-color: black;" +
                 "-fx-font-size: 50px;" + "-fx-text-fill:white");
@@ -43,29 +46,28 @@ public class GameLayout {
         layout1.getChildren().addAll(button1);
         button1.setPrefWidth(1001);
         button1.setPrefHeight(501);
-        scene = new Scene(layout1, Constants.scene_width, Constants.scene_height);
+        scene_ = new Scene(layout1, Constants.scene_width, Constants.scene_height);
         layout2 = new Group();
-        scene2 = new Scene(layout2, Constants.scene_width, Constants.scene_height);
-        scene2.setFill(Color.BLACK);
-        paddle1 = new Paddle(60, 50, scene2);
-        paddle2 = new Paddle(940, 50, scene2);
-        score = new Score(scene2);
-        ball = new Ball(scene2, paddle1, paddle2, score);
+        scene2_ = new Scene(layout2, Constants.scene_width, Constants.scene_height);
+        scene2_.setFill(Color.BLACK);
+        paddle1 = new Paddle(60, 50, scene2_);
+        paddle2_ = new Paddle(940, 50, scene2_);
+        score_ = new Score(scene2_);
         if (Multiplayer) {
-            Multiplayer multiplayer = new Multiplayer(paddle1, ball, paddle2, score);
-            Thread thread = new Thread(multiplayer);
-            thread.start();
+            Server server = new Server(scene2_, paddle2_, score_, paddle1);
+            Thread t = new Thread(server);
+            t.start();
         }
-        Ball_Movement();
-        Paddle_movement();
-        stage.setScene(scene);
-        stage.setTitle("Server");
+        Paddle_movement2();
+        stage.setScene(scene_);
+        stage.setTitle("Client");
         stage.show();
+
     }
 
-    public void Paddle_movement() {
-        scene2.setOnKeyPressed(keyEvent -> keys.put(keyEvent.getCode(), true));
-        scene2.setOnKeyReleased(keyEvent -> {
+    public void Paddle_movement2() {
+        scene2_.setOnKeyPressed(keyEvent -> keys.put(keyEvent.getCode(), true));
+        scene2_.setOnKeyReleased(keyEvent -> {
             keys.put(keyEvent.getCode(), false);
         });
         Timeline tl = new Timeline();
@@ -75,7 +77,9 @@ public class GameLayout {
                     public void handle(ActionEvent event) {
                         update();
                     }
+
                 });
+
         tl.getKeyFrames().add(moveBall);
         tl.play();
     }
@@ -85,15 +89,18 @@ public class GameLayout {
     }
 
     public void update() {
-        if (isPressed(KeyCode.S)) {
-            paddle1.MoveDown();
+        if (isPressed(KeyCode.UP)) {
+            paddle2_.MoveUp();
         }
-        if (isPressed(KeyCode.W)) {
-            paddle1.MoveUp();
+        if (isPressed(KeyCode.DOWN)) {
+            paddle2_.MoveDown();
         }
     }
 
     public void Ball_Movement() throws IOException {
         ball.Movement();
+
     }
+
+
 };

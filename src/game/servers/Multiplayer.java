@@ -1,51 +1,42 @@
 package game.servers;
 
-import game.Constants;
 import game.objects.Ball;
 import game.objects.Paddle;
 import game.objects.Score;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.concurrent.BlockingQueue;
 
 public class Multiplayer implements Runnable {
-    //private BlockingQueue<Integer> queue;
-    Score score;
-    DatagramSocket socket;
-    DatagramPacket packet;
-    String data;
+    DatagramSocket clientSocket;
+    DatagramPacket receivePacket;
+    DatagramPacket sendPacket;
     Paddle paddle1;
     Paddle paddle2;
     Ball ball;
-    Rectangle rect;
-    Scene scene;
-    double[]da;
-    byte[]data_in_bytes;
-    public Multiplayer(Paddle paddle1, Ball ball, Scene scene, Paddle paddle2, Score score) throws IOException {
-        this.score=score;
-        this.scene=scene;
-        this.paddle1=paddle1;
-        this.paddle2=paddle2;
-        this.ball=ball;
+    Score score;
+    ByteBuffer bb;
+    ByteBuffer bb2;
+    double[] da;
+    byte[] sendData;
+    byte[] receiveData;
+
+    public Multiplayer(Paddle paddle1, Ball ball, Paddle paddle2, Score score) throws IOException {
+        this.score = score;
+        this.paddle1 = paddle1;
+        this.paddle2 = paddle2;
+        this.ball = ball;
+        da = new double[5];
+        receiveData = new byte[8];
+        sendData = new byte[1024];
     }
-    public void run () {
+
+    public void run() {
+
+
         while (true) {
-
-
-            //get input from user
-            // get a datagram socket
-            BufferedReader inFromUser =
-                    new BufferedReader(new InputStreamReader(System.in));
-            DatagramSocket clientSocket = null;
+            clientSocket = null;
             try {
                 clientSocket = new DatagramSocket();
             } catch (SocketException e) {
@@ -57,26 +48,20 @@ public class Multiplayer implements Runnable {
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
-            da=new double[5];
-            da[0]=paddle1.getY();
-            da[1]=ball.X();
-            da[2]=ball.Y();
-            da[3]=score.getPlayer1();
-            da[4]=score.getPlayer2();
-            ByteBuffer bb = ByteBuffer.allocate(da.length*8);
 
-            for(double d : da) {
-               // System.out.print(d);
+            da[0] = paddle1.getY();
+            da[1] = ball.X();
+            da[2] = ball.Y();
+            da[3] = score.getPlayer1();
+            da[4] = score.getPlayer2();
+            bb = ByteBuffer.allocate(da.length * 8);
+            for (double d : da) {
                 bb.putDouble(d);
             }
             System.out.println();
-            byte[] sendData =  bb.array();
-            byte[] receiveData = new byte[1024];
-            String sentence = null;
-           // sentence=(Double.toString(paddle1.getY())+"*"+Double.toString(ball.X())+"*"+Double.toString(ball.Y()));
+            sendData = bb.array();
 
-            //System.out.println(Arrays.toString(sendData));
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+            sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
             try {
                 clientSocket.send(sendPacket);
             } catch (IOException e) {
@@ -84,22 +69,22 @@ public class Multiplayer implements Runnable {
             }
 
             int port = sendPacket.getPort();
-            DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length,IPAddress,port);
+            receivePacket = new DatagramPacket(receiveData, receiveData.length, IPAddress, port);
             try {
                 clientSocket.receive(receivePacket);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String received=new String(receivePacket.getData());
-            //System.out.print("received"+" "+Double.parseDouble(received));
-            paddle2.setY(Double.parseDouble(received));
-            //rect.setTranslateY(Double.parseDouble(received));
+            receiveData = receivePacket.getData();
+            bb2 = bb2.allocate(8);
+            bb2.put(receiveData);
+            bb2.flip();
+            paddle2.setY(bb2.getDouble());
             try {
-               Thread.sleep(60);
+                Thread.sleep(60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           // clientSocket.close();
         }
     }
 

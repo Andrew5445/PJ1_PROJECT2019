@@ -1,8 +1,8 @@
 package game.objects;
 
 import game.Constants;
+
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -16,13 +16,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class Ball {
-    //private final BlockingQueue<Integer> queue;
-    double xMin;
-    double yMin;
-    double xMax;
-    double yMax;
-    double centerX;
-    double centerY;
     Scene scene;
     Circle ball;
     Paddle paddle1, paddle2;
@@ -50,35 +43,34 @@ public class Ball {
                 new EventHandler<ActionEvent>() {
 
 
+                    public void handle(ActionEvent event) {
+                        if (ball.getBoundsInParent().getMinX() < 0) {
+                            score.Add_point_to_player1();
+                            ball.setTranslateX(0);
+                            ball.setTranslateY(0);
+                        }
+                        if (ball.getBoundsInParent().getMaxX() > scene.getWidth()) {
+                            score.Add_point_to_player2();
+                            ball.setTranslateX(0);
+                            ball.setTranslateY(0);
+                        }
 
-    public void handle(ActionEvent event) {
-        if (ball.getBoundsInParent().getMinX() < 0) {
-              score.Add_point_to_player1();
-            ball.setTranslateX(0);
-            ball.setTranslateY(0);
-        }
-        if (ball.getBoundsInParent().getMaxX() > scene.getWidth()) {
-             score.Add_point_to_player2();
-            ball.setTranslateX(0);
-            ball.setTranslateY(0);
-        }
+                        if (ball.getBoundsInParent().getMinY() < 0 || ball.getBoundsInParent().getMaxY() > scene.getHeight()) {
+                            dy = dy * -1;
+                        }
 
-        if (ball.getBoundsInParent().getMinY() < 0 || ball.getBoundsInParent().getMaxY() > scene.getHeight()) {
-            dy = dy * -1;
-        }
+                        /*Handle ball movement on paddles*/
 
-        /*Handle ball movement on paddles*/
-
-        if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY() + 10))) {
-            dx *= -1;
+                        if ((ball.getBoundsInParent().getMinX() <= paddle1.GetMaxX()) && ((ball.getBoundsInParent().getMinY() >= paddle1.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle1.GetMaxY() + 10))) {
+                            dx *= -1;
           /*  System.out.println("Paddle minY: " + paddle1.GetMinY());
             System.out.println("Paddle maxY: " + paddle1.GetMaxY());
             System.out.println("Paddle minX: " + paddle1.GetMinX());
             System.out.println("Paddle maxX: " + paddle1.GetMaxX());
             System.out.println("Ball center X: " + ball.getBoundsInParent().getMinX() + "Y: " + ball.getBoundsInParent().getMinY());
             System.out.println("*************************************************");*/
-        }
-                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY()-10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY()+10))) {
+                        }
+                        if ((ball.getBoundsInParent().getMaxX() >= paddle2.GetMinX()) && ((ball.getBoundsInParent().getMinY() >= paddle2.GetMinY() - 10) && (ball.getBoundsInParent().getMaxY() <= paddle2.GetMaxY() + 10))) {
                             dx *= -1;
                            /* System.out.println("Paddle minY: "+paddle2.GetMinY());
                             System.out.println("Paddle maxY: "+paddle2.GetMaxY());
@@ -89,21 +81,13 @@ public class Ball {
                         }
        /* System.out.print(ball.getTranslateX());
         System.out.println();*/
-        ball.setTranslateX(ball.getTranslateX() - dx);
-        ball.setTranslateY(ball.getTranslateY() + dy);
-    }
-    });
+                        ball.setTranslateX(ball.getTranslateX() - dx);
+                        ball.setTranslateY(ball.getTranslateY() + dy);
+                    }
+                });
 
-    tl.getKeyFrames().add(moveBall);
-     tl.play();
-                }
-
-    public double Get_MinX() {
-        return ball.getBoundsInParent().getMinX();
-    }
-
-    public double Get_MaxX() {
-        return ball.getBoundsInParent().getMaxX();
+        tl.getKeyFrames().add(moveBall);
+        tl.play();
     }
 
     public double Y() {
